@@ -3,8 +3,9 @@ import { useState } from "react";
 export default function TaskList({ elementos, onChangeTask, onDeleteTask }) {
   return (
     <ul>
-      {elementos.map((task) => (
+      {elementos.map((task, index) => (
         <li key={task.id}>
+          <span>{index + 1} </span>
           <Task task={task} onChange={onChangeTask} onDelete={onDeleteTask} />
         </li>
       ))}
@@ -18,7 +19,6 @@ function Task({ task, onChange, onDelete }) {
   if (isEditing) {
     taskContent = (
       <>
-        {task.id + 1}.-
         <input
           value={task.nombre}
           onChange={(e) => {
@@ -52,7 +52,6 @@ function Task({ task, onChange, onDelete }) {
   } else {
     taskContent = (
       <>
-        {task.id + 1}.-
         {task.nombre}
         {task.comida}
         {task.valorComida}
@@ -62,16 +61,6 @@ function Task({ task, onChange, onDelete }) {
   }
   return (
     <label>
-      {/*<input
-        type="checkbox"
-        checked={task.done}
-        onChange={(e) => {
-          onChange({
-            ...task,
-            done: e.target.checked,
-          });
-        }}
-    />*/}
       {taskContent}
       <button onClick={() => onDelete(task.id)}>Borrar</button>
     </label>
