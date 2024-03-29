@@ -2,18 +2,23 @@ import { useState } from "react";
 
 export default function TaskList({ elementos, onChangeTask, onDeleteTask }) {
   return (
-    <ul>
+    <>
       {elementos.map((task, index) => (
         <li key={task.id}>
-          <span>{index + 1} </span>
-          <Task task={task} onChange={onChangeTask} onDelete={onDeleteTask} />
+          <Task
+            task={task}
+            onChange={onChangeTask}
+            onDelete={onDeleteTask}
+            elementos={elementos}
+            index={index}
+          />
         </li>
       ))}
-    </ul>
+    </>
   );
 }
 
-function Task({ task, onChange, onDelete }) {
+function Task({ task, onChange, onDelete, elementos, index }) {
   const [isEditing, setIsEditing] = useState(false);
   let taskContent;
   if (isEditing) {
@@ -60,9 +65,13 @@ function Task({ task, onChange, onDelete }) {
     );
   }
   return (
-    <label>
-      {taskContent}
-      <button onClick={() => onDelete(task.id)}>Borrar</button>
-    </label>
+    <>
+      {
+        <>
+          <span>{index + 1}.- </span> {taskContent}
+          <button onClick={() => onDelete(task.id)}>Borrar</button>
+        </>
+      }
+    </>
   );
 }
